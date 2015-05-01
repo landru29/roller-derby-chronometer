@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">RollerDerbyChronometers</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="pause_button_caption">Pause</string>
+    <string name="resume_button_caption">Resume</string>
+
+    <string name="empty_chronometer">vide</string>
+
+    <string name="chronometer_start">Start</string>
+    <string name="chronometer_stop">Stop</string>
+
+    <string name="instruction_stand">Stand</string>
+    <string name="instruction_done">Done</string>
+
+</resources>
