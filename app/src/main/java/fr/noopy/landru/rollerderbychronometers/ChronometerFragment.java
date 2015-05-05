@@ -17,19 +17,22 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import fr.noopy.landru.rollerderbychronometers.components.CountDownChronometer;
+import fr.noopy.landru.rollerderbychronometers.listeners.OnCountDownTickListener;
+
 /**
  * A fragment with a Google +1 button.
  */
 public class ChronometerFragment extends Fragment {
 
-    private boolean running;
-    private boolean globalRunning;
-    private long pauseTimeMilli;
+    enum chronometerType {
+        JAMMER,
+        BLOCKER
+    };
+
+    private chronometerType type;
 
     public ChronometerFragment() {
-        this.running = false;
-        this.globalRunning = true;
-        this.pauseTimeMilli = 0;
         // Required empty public constructor
     }
 
@@ -45,22 +48,14 @@ public class ChronometerFragment extends Fragment {
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
                 Log.i("Receiver", "Broadcast received: " + action);
-                if(action.equals("start-stop")){
-                    Chronometer chrono = (Chronometer)getView().findViewById(R.id.chronometer);
+                if (action.equals("start-stop")){
+                    CountDownChronometer chrono = (CountDownChronometer)getView().findViewById(R.id.chronometer);
                     String state = intent.getExtras().getString("action");
                     if (state.compareTo("start") == 0) {
-                        globalRunning = true;
-                        if (running) {
-                            chrono.setBase(SystemClock.elapsedRealtime() + pauseTimeMilli);
-                            chrono.start();
-                        }
+                        chrono.setPauseState(false);
                     }
                     if (state.compareTo("stop") == 0) {
-                        globalRunning = false;
-                        if (running) {
-                            pauseTimeMilli = chrono.getBase() - SystemClock.elapsedRealtime();
-                            chrono.stop();
-                        }
+                        chrono.setPauseState(true);
                     }
                 }
             }
@@ -74,35 +69,30 @@ public class ChronometerFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         Bundle bundle = this.getArguments();
-        if ((bundle != null) && (bundle.containsKey("name"))) {
-            TextView nameView = (TextView)getView().findViewById(R.id.name);
-            nameView.setText(bundle.getString("name"));
+        if (bundle != null) {
+            if (bundle.containsKey("name")) {
+                TextView nameView = (TextView) getView().findViewById(R.id.name);
+                nameView.setText(bundle.getString("name"));
+            }
+            if (bundle.containsKey("type")) {
+                this.type = chronometerType.values()[bundle.getInt("type", 0)];
+            }
         }
 
-        final Chronometer chrono = (Chronometer)getView().findViewById(R.id.chronometer);
+        final CountDownChronometer chrono = (CountDownChronometer)getView().findViewById(R.id.chronometer);
         final TextView instruction = (TextView)getView().findViewById(R.id.instruction);
         final Button startStop = (Button)getView().findViewById(R.id.start_stop);
 
-        chrono.setText("0:00");
-        chrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+        chrono.setOnChronometerTickListener(new OnCountDownTickListener() {
             @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                CharSequence text = chronometer.getText();
-                if (text.length()>4) {
-                    chronometer.setText(text.subSequence(text.length()-4, text.length()));
-                } else {
-                    chronometer.setText(text);
-                }
-                long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
-                if ((elapsedMillis>20000) && (elapsedMillis<30000)) {
+            public void onChronometerTick(CountDownChronometer countDownChronometer) {
+                long value = countDownChronometer.getValue();
+                if (value<10000) {
                     instruction.setText(R.string.instruction_stand);
                 }
-                if (elapsedMillis>30000) {
+                if (value == 0) {
                     instruction.setText(R.string.instruction_done);
-                    chronometer.stop();
-                    running = false;
                     startStop.setText(R.string.chronometer_start);
-                    pauseTimeMilli = 0;
                 }
             }
         });
@@ -110,22 +100,15 @@ public class ChronometerFragment extends Fragment {
         startStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (running) {
-                    // stop the chronometer
+                if (chrono.isRunning()) {
                     chrono.stop();
-                    running = false;
                     startStop.setText(R.string.chronometer_start);
                 } else {
-                    // start the chronometer
-                    chrono.setBase(SystemClock.elapsedRealtime());
-                    chrono.setText("0:00");
-                    pauseTimeMilli = 0;
+                    chrono.setValue(30000);
                     instruction.setText("");
-                    running = true;
                     startStop.setText(R.string.chronometer_stop);
-                    if (globalRunning) {
-                        chrono.start();
-                    }
+                    chrono.start();
+
                 }
             }
         });

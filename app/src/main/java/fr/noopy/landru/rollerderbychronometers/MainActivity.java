@@ -20,15 +20,16 @@ public class MainActivity extends ActionBarActivity {
         running = true;
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            this.getFragmentManager().beginTransaction().replace(R.id.chrono00, penaltyBoxChronometer("B11")).commit();
-            this.getFragmentManager().beginTransaction().replace(R.id.chrono01, penaltyBoxChronometer("B12")).commit();
-            this.getFragmentManager().beginTransaction().replace(R.id.chrono02, penaltyBoxChronometer("B13")).commit();
-            this.getFragmentManager().beginTransaction().replace(R.id.chrono0J, penaltyBoxChronometer("J")).commit();
+            this.getFragmentManager().beginTransaction().replace(R.id.chrono00, penaltyBoxChronometer(ChronometerFragment.chronometerType.BLOCKER, "B13")).commit();
+            this.getFragmentManager().beginTransaction().replace(R.id.chrono01, penaltyBoxChronometer(ChronometerFragment.chronometerType.BLOCKER, "B12")).commit();
+            this.getFragmentManager().beginTransaction().replace(R.id.chrono02, penaltyBoxChronometer(ChronometerFragment.chronometerType.BLOCKER, "B13")).commit();
+            this.getFragmentManager().beginTransaction().replace(R.id.chrono0J, penaltyBoxChronometer(ChronometerFragment.chronometerType.JAMMER, "J")).commit();
 
-            this.getFragmentManager().beginTransaction().replace(R.id.chrono10, penaltyBoxChronometer("B21")).commit();
-            this.getFragmentManager().beginTransaction().replace(R.id.chrono11, penaltyBoxChronometer("B22")).commit();
-            this.getFragmentManager().beginTransaction().replace(R.id.chrono12, penaltyBoxChronometer("B23")).commit();
-            this.getFragmentManager().beginTransaction().replace(R.id.chrono1J, penaltyBoxChronometer("J2")).commit();
+            this.getFragmentManager().beginTransaction().replace(R.id.chrono1J, penaltyBoxChronometer(ChronometerFragment.chronometerType.JAMMER, "J2")).commit();
+            this.getFragmentManager().beginTransaction().replace(R.id.chrono10, penaltyBoxChronometer(ChronometerFragment.chronometerType.BLOCKER, "B21")).commit();
+            this.getFragmentManager().beginTransaction().replace(R.id.chrono11, penaltyBoxChronometer(ChronometerFragment.chronometerType.BLOCKER, "B22")).commit();
+            this.getFragmentManager().beginTransaction().replace(R.id.chrono12, penaltyBoxChronometer(ChronometerFragment.chronometerType.BLOCKER, "B23")).commit();
+
         }
 
         final Button globalPause = (Button)findViewById(R.id.pause_button);
@@ -76,9 +77,12 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private ChronometerFragment penaltyBoxChronometer(String name) {
+    private ChronometerFragment penaltyBoxChronometer(ChronometerFragment.chronometerType type, String name) {
         ChronometerFragment chrono = new ChronometerFragment();
+
         Bundle bundle = new Bundle();
+
+        bundle.putInt("type", type.ordinal());
         bundle.putString("name", name);
         chrono.setArguments(bundle);
         return chrono;
