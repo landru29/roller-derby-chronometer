@@ -1,21 +1,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     tools:context=".ChronometerFragment"
     android:orientation="horizontal"
+    android:id="@+id/container"
     >
 
-
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="P"
-        android:id="@+id/name" />
+        android:id="@+id/icon" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/chronometer_start"
@@ -25,11 +22,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/chronometer"
-        />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:paddingLeft="@dimen/abc_action_bar_default_height_material" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/instruction" />
+        android:id="@+id/instruction"
+        />
 </LinearLayout>

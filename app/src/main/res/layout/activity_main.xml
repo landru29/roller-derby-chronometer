@@ -7,20 +7,43 @@
     android:orientation="vertical"
     >
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pause_button_caption"
+        android:id="@+id/pause_button"
+        style="@style/jam_button" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pause_button_caption"
-            android:id="@+id/pause_button" />
+            android:text="@string/jam_number_caption"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="1"
+            android:id="@+id/jam_number" />
+
+        <fr.noopy.landru.rollerderbychronometers.components.CountDownChronometer
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/jam_chronometer"
+            android:paddingLeft="@dimen/abc_action_bar_default_height_material"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            />
     </LinearLayout>
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/chrono00"
         >
@@ -28,7 +51,7 @@
     </FrameLayout>
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/chrono01"
         >
@@ -36,7 +59,7 @@
         </FrameLayout>
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/chrono02"
         >
@@ -44,16 +67,23 @@
         </FrameLayout>
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/chrono0J"
         >
 
     </FrameLayout>
 
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/chrono1J"
+        >
+    </FrameLayout>
+
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/chrono10"
         >
@@ -61,7 +91,7 @@
         </FrameLayout>
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/chrono11"
         >
@@ -69,19 +99,12 @@
         </FrameLayout>
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/chrono12"
         >
 
         </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/chrono1J"
-        >
-
-    </FrameLayout>
 
 </LinearLayout>

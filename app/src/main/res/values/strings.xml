@@ -1,12 +1,13 @@
 <resources>
-    <string name="app_name">RollerDerbyChronometers</string>
+    <string name="app_name">Roller Derby Penalty Box</string>
 
     <string name="action_settings">Settings</string>
 
-    <string name="pause_button_caption">Pause</string>
-    <string name="resume_button_caption">Resume</string>
+    <string name="pause_button_caption">End of jam</string>
+    <string name="resume_button_caption">Start jam</string>
 
     <string name="empty_chronometer">vide</string>
+    <string name="jam_number_caption">Jam</string>
 
     <string name="chronometer_start">Start</string>
     <string name="chronometer_stop">Stop</string>

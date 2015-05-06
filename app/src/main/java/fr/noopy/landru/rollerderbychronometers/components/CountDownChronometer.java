@@ -2,6 +2,8 @@ package fr.noopy.landru.rollerderbychronometers.components;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.widget.Chronometer;
 import android.widget.TextView;
@@ -30,7 +32,7 @@ public class CountDownChronometer extends TextView {
      */
     public CountDownChronometer(Context context, AttributeSet attrs, int defStyle) {
         super (context, attrs, defStyle);
-        this.currentActivity = (Activity)context;
+        this.currentActivity = (Activity) context;
         setText("0:00");
         this.pause = false;
         this.tickListener = null;
@@ -58,7 +60,8 @@ public class CountDownChronometer extends TextView {
      * @param milliseconds
      */
     public void setValue(long milliseconds) {
-        this.value = milliseconds;
+        this.value = (milliseconds>0 ? milliseconds : 0);
+        display();
     }
 
     /**
@@ -67,6 +70,7 @@ public class CountDownChronometer extends TextView {
      */
     public void addValue(long milliseconds) {
         this.value += milliseconds;
+        display();
     }
 
     /**
@@ -84,9 +88,7 @@ public class CountDownChronometer extends TextView {
                         value = 0;
                         stop();
                     }
-                    int seconds = (int) (Math.ceil((double)value / 1000)) % 60;
-                    int minutes = (int) ((value / (1000 * 60)) % 60);
-                    setText(String.format("%d:%02d", minutes, seconds));
+                    display();
                     if (tickListener != null) {
                         tickListener.onChronometerTick(me);
                     }
@@ -103,6 +105,12 @@ public class CountDownChronometer extends TextView {
                 }
             }
         }, 0, 10);
+    }
+
+    private void display() {
+        int seconds = (int) (Math.ceil((double)value / 1000)) % 60;
+        int minutes = (int) (((value + 999) / (1000*60)) % 60);
+        setText(String.format("%d:%02d", minutes, seconds));
     }
 
     /**
@@ -136,6 +144,30 @@ public class CountDownChronometer extends TextView {
      */
     public long getValue() {
         return value;
+    }
+
+    /**
+     * Get the state of the chronometer
+     * @return
+     */
+    public Bundle getState() {
+        Bundle bundle = new Bundle();
+        bundle.putLong("system-clock", SystemClock.elapsedRealtime());
+        bundle.putLong("value", value);
+        bundle.putBoolean("is-running", isRunning());
+        return bundle;
+    }
+
+    /**
+     * Restore the state of the chronometer
+     * @param bundle
+     */
+    public void setState(Bundle bundle) {
+        long offset = SystemClock.elapsedRealtime() - bundle.getLong("system-clock");
+        setValue(bundle.getLong("value") - offset);
+        if (bundle.getBoolean("is-running")) {
+            start();
+        }
     }
 
     /**

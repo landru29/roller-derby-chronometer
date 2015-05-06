@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<animation-list android:id="@+id/selected" android:oneshot="false" xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/on_going_background0" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background1" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background2" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background3" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background4" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background5" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background6" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background7" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background8" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background9" android:duration="100" />
+    <item android:drawable="@drawable/on_going_backgrounda" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background9" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background8" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background7" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background6" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background5" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background4" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background3" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background2" android:duration="100" />
+    <item android:drawable="@drawable/on_going_background1" android:duration="100" />
+</animation-list>
